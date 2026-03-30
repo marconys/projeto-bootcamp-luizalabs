@@ -1,7 +1,7 @@
 import bcrypt
 
 
-def generate_password_hash(password: str) -> str:
+def hash_password(password: str) -> str:
     
     # 1. Transformamos a string em bytes
     pwd_bytes = password.encode('utf-8')
@@ -13,7 +13,7 @@ def generate_password_hash(password: str) -> str:
     return hashed.decode('utf-8')
 
 
-def verify_ppassword(password: str, hashed_password: str) -> bool:
+def verify_password(password: str, hashed_password: str) -> bool:
     # Para verificar, comparamos a senha vinda do usuário
     # com o hash que está no banc
     return bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8"))
