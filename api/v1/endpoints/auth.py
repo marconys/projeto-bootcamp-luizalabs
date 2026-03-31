@@ -13,7 +13,7 @@ from schemas.usuario_schema import UsuarioSchemaLogin
 router = APIRouter()
 
 
-@router.post("/auth/login")
+@router.post("/login")
 async def login(
     user_data: UsuarioSchemaLogin,
     db: AsyncSession = Depends(get_session)
