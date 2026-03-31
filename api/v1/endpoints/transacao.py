@@ -28,22 +28,24 @@ async def create_transaction(
 ):
     service = TransactionService()
     try:
-        # pega a conta do usuário logado
+        # Pega a conta do usuário (que já vem carregada graças ao selectinload no deps.py)
         account = current_user.account
 
-        result = await service.create_transaction(
+        # O service retorna o objeto TransactionModel puro
+        transaction = await service.create_transaction(
             db=db,
             account_id=account.id,
             amount=transaction_data.amount,
             transaction_type=transaction_data.transaction_type,
         )
 
-        return result["transaction"]
+        # RETORNO CORRIGIDO: Retorne o objeto diretamente
+        return transaction
 
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-
-
+    
+    
 @router.get("/", response_model=list[TransacaoSchemaResponse])
 async def get_transactions(
     page: int = 1,
