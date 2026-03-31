@@ -2,15 +2,15 @@ import bcrypt
 
 
 def hash_password(password: str) -> str:
-    
+
     # 1. Transformamos a string em bytes
-    pwd_bytes = password.encode('utf-8')
+    pwd_bytes = password.encode("utf-8")
     # 2. Geramos um salt e criamos o hash
     salt = bcrypt.gensalt()
     # 3. Criamos o hash usando o bcrypt
     hashed = bcrypt.hashpw(pwd_bytes, salt)
     # Retornamos como string para salvar no banco de dados
-    return hashed.decode('utf-8')
+    return hashed.decode("utf-8")
 
 
 def verify_password(password: str, hashed_password: str) -> bool:

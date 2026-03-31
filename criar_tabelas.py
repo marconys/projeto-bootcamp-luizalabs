@@ -5,6 +5,7 @@ from core.database import engine
 
 from models.__all_models import *
 
+
 async def create_tables():
     try:
         async with engine.begin() as conn:
@@ -14,11 +15,10 @@ async def create_tables():
         print("Tabelas criadas com sucesso!")
     except Exception as e:
         print(f"Erro ao criar tabelas: {e}")
-    
+
     finally:
         await engine.dispose()
-        
-        
+
+
 if __name__ == "__main__":
-    asyncio.run(create_tables())         
-        
+    asyncio.run(create_tables())

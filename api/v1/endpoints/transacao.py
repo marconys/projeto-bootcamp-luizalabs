@@ -11,27 +11,20 @@ from core.deps import get_session, get_current_user
 from models.transacoes_model import TransactionModel
 from models.usuario_model import UserModel
 
-from schemas.transacao_schema import (
-    TransacaoSchemaCreate,
-    TransacaoSchemaResponse
-)
+from schemas.transacao_schema import TransacaoSchemaCreate, TransacaoSchemaResponse
 
 from services.transaction_service import TransactionService
-
 
 router = APIRouter()
 
 
-
 @router.post(
-    "/",
-    response_model=TransacaoSchemaResponse,
-    status_code=status.HTTP_201_CREATED
+    "/", response_model=TransacaoSchemaResponse, status_code=status.HTTP_201_CREATED
 )
 async def create_transaction(
     transaction_data: TransacaoSchemaCreate,
     db: AsyncSession = Depends(get_session),
-    current_user: UserModel = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user),
 ):
     service = TransactionService()
     try:
@@ -42,43 +35,35 @@ async def create_transaction(
             db=db,
             account_id=account.id,
             amount=transaction_data.amount,
-            transaction_type=transaction_data.transaction_type
+            transaction_type=transaction_data.transaction_type,
         )
 
         return result["transaction"]
 
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router.get(
-    "/",
-    response_model=list[TransacaoSchemaResponse]
-)
+
+@router.get("/", response_model=list[TransacaoSchemaResponse])
 async def get_transactions(
     page: int = 1,
     limit: int = 10,
     type: Optional[str] = None,
     db: AsyncSession = Depends(get_session),
-    current_user: UserModel = Depends(get_current_user)
+    current_user: UserModel = Depends(get_current_user),
 ):
     account = current_user.account
 
     if not account:
         raise HTTPException(
-            status_code=400,
-            detail="Usuário não possui conta associada"
+            status_code=400, detail="Usuário não possui conta associada"
         )
 
     # cálculo de paginação
     offset = (page - 1) * limit
 
     # query base
-    query = select(TransactionModel).where(
-        TransactionModel.account_id == account.id
-    )
+    query = select(TransactionModel).where(TransactionModel.account_id == account.id)
 
     # filtro por tipo
     if type:

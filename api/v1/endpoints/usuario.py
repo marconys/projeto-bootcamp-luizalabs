@@ -5,18 +5,14 @@ from core.deps import get_session
 from schemas.usuario_schema import UsuarioSchemaCreate, UsuarioSchemaResponse
 from services.user_service import UserService
 
-
 router = APIRouter()
 
 
 @router.post(
-    "/",
-    response_model=UsuarioSchemaResponse,
-    status_code=status.HTTP_201_CREATED
+    "/", response_model=UsuarioSchemaResponse, status_code=status.HTTP_201_CREATED
 )
 async def create_user(
-    user_data: UsuarioSchemaCreate,
-    db: AsyncSession = Depends(get_session)
+    user_data: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)
 ):
     service = UserService()
 
@@ -25,7 +21,4 @@ async def create_user(
         return UsuarioSchemaResponse.model_validate(user)
 
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
