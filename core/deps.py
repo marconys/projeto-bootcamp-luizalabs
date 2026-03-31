@@ -14,7 +14,7 @@ from core.database import Session
 from models.usuario_model import UserModel
 
 # Onde o FastAPI busca o token no Swagger
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/usuarios/login")
 
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     session: AsyncSession = Session()
