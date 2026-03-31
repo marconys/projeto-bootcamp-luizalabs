@@ -10,7 +10,7 @@ Base = declarative_base()
 class Settings(BaseModel):
    
    API_V1_STR: str = "/api/v1"
-   DB_URL: AnyUrl = "postgresql+asyncpg://postgres:123456@localhost:5433/banco_trasacoes"
+   DB_URL: AnyUrl = "postgresql+asyncpg://postgres:123456@localhost:5432/banco_trasacoes"
    DB_BASE_MODEL: Any = Base
    HOST: str = "localhost"
    PORT: int = 8000
