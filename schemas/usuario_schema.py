@@ -20,9 +20,3 @@ class UsuarioSchemaCreate(UsuarioSchemaBase):
 class UsuarioSchemaResponse(UsuarioSchemaBase):
     id: int
     account: Optional[ContaSchemaResponse] = None
-
-
-# Login
-class UsuarioSchemaLogin(BaseModel):
-    email: EmailStr
-    senha: str
