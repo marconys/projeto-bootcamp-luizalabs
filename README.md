@@ -1,4 +1,4 @@
-# 💸 API de Conta Digital
+# 💸 API de Conta Digital com FastAPI
 
 Projeto desenvolvido como desafio técnico do bootcamp do **Magazine Luiza** na plataforma **DIO (Digital Innovation One)**.
 
